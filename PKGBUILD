@@ -1,10 +1,13 @@
 # Maintainer: Hauke Rehfeld <aur@haukerehfeld.de>
-SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
-source="$SCRIPT_DIR/.env"
+set -xe
+source ".env"
+set +e
 
 pkgname="my-ssh-tunnel-${TUNNEL_HOST}-${DESTINATION_PORT}-${TUNNEL_PORT}-${SOURCE_PORT}"
+set +x
+
 pkgver=1
-pkgrel=1
+pkgrel=5
 epoch=
 pkgdesc=""
 arch=('i686' 'x86_64')
@@ -22,27 +25,63 @@ backup=()
 options=()
 install=
 changelog=
-source=( "$SCRIPT_DIR/from-destination" "$SCRIPT_DIR/to-destination")
-sha256sums=('19408b0f69de5006bbdcb6fdc0b707ac213e70364cf5edaf111134e8c79c8796'
-            '069865f6451af78d43aeb362779ae35bc4878b381e559f2340cc00045c8fc418')
+source=("from-destination" "to-destination" "ssh.template.service")
+sha256sums=('a8df6ab00b0fdddcee40743487c844b48e6b697de7a72a11e6e41e93183b13c7'
+            '128cbe4a9532dca5cc729d2e1c04f2186ce428d866273c8443ba80c919b15984'
+            '2a52f489190b41e4e0bc2a3cdf96baa1bd61818b32f0f76e83473aea686fdbad')
+
+
+
+
+
+_bins=("from-destination" "to-destination")
+
+
+_installdir="/usr/lib/${pkgname}"
+
+
+
+_SYSTEMD_SERVICE_DIR="/etc/systemd/user"
+
 
 noextract=()
 
-_BINS=("from-destination " "to-destination")
-
 prepare() {
+  set -x
   cd "$srcdir"
+  cp "../.env" "."
+  for bin in ${source[@]}
+  do
+    [ -L "${srcdir}/${bin}" ] && cp -a --remove-destination $(readlink "${srcdir}/${bin}") "${srcdir}/${bin}"
+    sed -i 's!${pkgdir}!'"${_installdir}"'!g' "$bin"
+  done
+
+  for bin in ${_bins[@]}
+  do
+    binname="${pkgname}-${bin}"
+    binpath="/usr/bin/$binname"
+    sed 's!${cmd}!'"${binpath}"'!g' "${srcdir}/ssh.template.service" > "${srcdir}/${bin}.service"
+  done
+  set +x
 }
 
 package() {
   set -x
+
+  mkdir -p "${pkgdir}/usr/bin/"
   cd "$srcdir"
-  for bin in ${_BINS[@]}
+  install -Dm644 ".env" "${pkgdir}${_installdir}/.env"
+  for bin in ${_bins[@]}
   do
     binname="${pkgname}-${bin}"
-    install -Dm755 "$binname" "$pkgdir/usr/lib/${pkgname}/${binname}"
+    binpath="/usr/bin/$binname"
+    install -Dm755 "${srcdir}/${bin}" "${pkgdir}${_installdir}/${binname}"
+    ln -sf "${_installdir}/$binname" "${pkgdir}${binpath}"
+    chmod 755 "${pkgdir}${binpath}"
+
+    install -Dm644 "${srcdir}/${bin}.service" "${pkgdir}${_SYSTEMD_SERVICE_DIR}/${binname}.service"
   done
-  install -Dm644 ".env" "$pkgdir/usr/lib/${pkgname}/.env"
+
   set +x
 }
 

@@ -1,5 +1,4 @@
-#!/usr/bin/sh -xe
-SCRIPT_DIR=$(cd $(realpath $(dirname "${BASH_SOURCE[0]}")) && pwd)
-source "$SCRIPT_DIR/.env"
+#!/usr/bin/sh -e
+source "${pkgdir}/.env"
 
 ssh -N -R ${TUNNEL_PORT}:localhost:${DESTINATION_PORT} "$TUNNEL_HOST"
