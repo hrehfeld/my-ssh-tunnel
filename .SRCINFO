@@ -1,13 +1,15 @@
-pkgbase = my-ssh-tunnel----
+pkgbase = my-ssh-tunnel-phpfriends-22-9458-2222
 	pkgver = 1
-	pkgrel = 1
+	pkgrel = 5
 	arch = i686
 	arch = x86_64
 	license = GPL
 	depends = openssh
-	source = /home/hrehfeld/projects/arch-packages/my-ssh-tunnel/from-destination
-	source = /home/hrehfeld/projects/arch-packages/my-ssh-tunnel/to-destination
-	sha256sums = 19408b0f69de5006bbdcb6fdc0b707ac213e70364cf5edaf111134e8c79c8796
-	sha256sums = 069865f6451af78d43aeb362779ae35bc4878b381e559f2340cc00045c8fc418
+	source = from-destination
+	source = to-destination
+	source = ssh.template.service
+	sha256sums = a8df6ab00b0fdddcee40743487c844b48e6b697de7a72a11e6e41e93183b13c7
+	sha256sums = 128cbe4a9532dca5cc729d2e1c04f2186ce428d866273c8443ba80c919b15984
+	sha256sums = 2a52f489190b41e4e0bc2a3cdf96baa1bd61818b32f0f76e83473aea686fdbad
 
-pkgname = my-ssh-tunnel----
+pkgname = my-ssh-tunnel-phpfriends-22-9458-2222
