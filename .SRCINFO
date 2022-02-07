@@ -1,0 +1,13 @@
+pkgbase = my-ssh-tunnel----
+	pkgver = 1
+	pkgrel = 1
+	arch = i686
+	arch = x86_64
+	license = GPL
+	depends = openssh
+	source = /home/hrehfeld/projects/arch-packages/my-ssh-tunnel/from-destination
+	source = /home/hrehfeld/projects/arch-packages/my-ssh-tunnel/to-destination
+	sha256sums = 19408b0f69de5006bbdcb6fdc0b707ac213e70364cf5edaf111134e8c79c8796
+	sha256sums = 069865f6451af78d43aeb362779ae35bc4878b381e559f2340cc00045c8fc418
+
+pkgname = my-ssh-tunnel----
