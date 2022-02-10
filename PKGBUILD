@@ -77,7 +77,6 @@ package() {
     binpath="/usr/bin/$binname"
     install -Dm755 "${srcdir}/${bin}" "${pkgdir}${_installdir}/${binname}"
     ln -sf "${_installdir}/$binname" "${pkgdir}${binpath}"
-    chmod 755 "${pkgdir}${binpath}"
 
     install -Dm644 "${srcdir}/${bin}.service" "${pkgdir}${_SYSTEMD_SERVICE_DIR}/${binname}.service"
   done
