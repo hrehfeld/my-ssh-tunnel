@@ -7,7 +7,7 @@ pkgname="my-ssh-tunnel-${TUNNEL_HOST}-${DESTINATION_PORT}-${TUNNEL_PORT}-${SOURC
 set +x
 
 pkgver=1
-pkgrel=5
+pkgrel=6
 epoch=
 pkgdesc=""
 arch=('i686' 'x86_64')
@@ -28,7 +28,7 @@ changelog=
 source=("from-destination" "to-destination" "ssh.template.service")
 sha256sums=('a8df6ab00b0fdddcee40743487c844b48e6b697de7a72a11e6e41e93183b13c7'
             '128cbe4a9532dca5cc729d2e1c04f2186ce428d866273c8443ba80c919b15984'
-            '2a52f489190b41e4e0bc2a3cdf96baa1bd61818b32f0f76e83473aea686fdbad')
+            '465d5e12c99a3aea32dece38adf4277cfa2c6f1983a32ee225ecfd762f1ab123')
 
 
 

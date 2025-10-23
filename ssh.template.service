@@ -1,9 +1,6 @@
 [Unit]
 Description=Start ssh connection to remote tunnel
 
-StartLimitIntervalSec=0
-StartLimitBurst=5
-
 [Service]
 Restart=always
 RestartSec=30s
